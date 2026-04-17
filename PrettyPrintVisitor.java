@@ -38,8 +38,16 @@ public class PrettyPrintVisitor extends liteQLBaseVisitor<String> {
         }
         return createSelectStmt(ctx);
      }
-
-	@Override public String visitCreateTable(liteQLParser.CreateTableContext ctx) { return visitChildren(ctx); }
+     //TODO: fix the attribute list get text
+	@Override public String visitCreateTable(liteQLParser.CreateTableContext ctx) { 
+        StringBuilder sb = new StringBuilder();
+        sb.append("-- CREATE TABLE COMMAND --\n");
+        sb.append("DROP TABLE IF EXISTS ").append(ctx.tablename.getText()).append(";\n");
+        sb.append("CREATE TABLE ").append(ctx.tablename.getText()).append(" (");
+        sb.append(ctx.createAttrList().getText());
+        sb.append("\n);");
+        return sb.toString();
+     }
     
     @Override public String visitWhereClause(liteQLParser.WhereClauseContext ctx) { 
         //WITH conjoinedAttrComparison;
@@ -60,6 +68,11 @@ public class PrettyPrintVisitor extends liteQLBaseVisitor<String> {
         String comparison = getComparisonSymbol(ctx.comparison().getText());
         return ctx.attribute().getText() + " " + comparison + " " + ctx.value().getText();
     }
+
+    @Override public String visitFullschema(liteQLParser.FullschemaContext ctx) { return ".fullschema"; }
+	
+	@Override public String visitTables(liteQLParser.TablesContext ctx) { return ".tables"; } 
+
     public AssignListExtractor splitAssignList(String assignList){
         /*
         assignList: assignmentStmt ',' assignList
@@ -116,7 +129,7 @@ public class PrettyPrintVisitor extends liteQLBaseVisitor<String> {
         }
         if (ctx.orderClause() != null) {
             sb.append(" ").append("ORDER BY ").append(ctx.orderClause().attributeList().getText());//get order
-            if(ctx.orderClause().order.equals("desc")){
+            if(ctx.orderClause().order!= null && ctx.orderClause().order.equals("desc")){
                 sb.append( " DESC");
             }
         }
@@ -147,7 +160,7 @@ public class PrettyPrintVisitor extends liteQLBaseVisitor<String> {
         }
         if (ctx.orderClause() != null) {
             sb.append(" ").append("ORDER BY ").append(ctx.orderClause().attributeList().getText());//get order
-            if(ctx.orderClause().order.equals("desc")){
+            if(ctx.orderClause().order!= null && ctx.orderClause().order.equals("desc")){
                 sb.append( " DESC");
             }
         }

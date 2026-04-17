@@ -21,7 +21,7 @@ deleteRow: REMOVE tableSource whereClause ';';
 insert: ADD tableSource assignList  ';';
 updateRow: CHANGE tableSource SET assignList whereClause ';';
 select: limitClause? tableSource selectList joinClause? orderClause? whereClause? (groupClause havingClause?)? ';';
-createTable: NEW TABLE tablename=ID  createAttrList  ';';
+createTable: NEW TABLE tablename=ID '{' createAttrList '}' ';';
 //declareBlock: DECLARE tableSource declaredTablesList ';';
 
 //CLAUSES
