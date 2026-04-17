@@ -84,8 +84,8 @@ createAttrList: createAttr ',' createAttrList           #listOfCreateAttr
         ;
 //COMPARING ATTRIBUTES
 //handles and, or ex first_name is 'sam' and last_name is 'mac'
-conjoinedAttrComparison: attrComparison conjunction conjoinedAttrComparison     #conjunctionOfAttrComparison
-                        | attrComparison                                        #singleAttrComparison
+conjoinedAttrComparison: attrComparison conjunction conjoinedAttrComparison    
+                        | attrComparison                                       
                         ;
 //simple comparison like first_name is 'sam'
 attrComparison: attribute comparison value;
