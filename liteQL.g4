@@ -49,8 +49,6 @@ constraintList: constraint ',' constraintList           #listOfConstraint
             |   constraint                             #singleConstraint
             ;
 constraint: NOT NULL
-        |   'auto_inc'
-        |   'uniq'
         |   'pk'
         ;
 
@@ -117,9 +115,8 @@ conjunction: AND | OR;
 
 //allowed types
 type: 'int'
-    | 'double' '('INTEGER','INTEGER')'
-    | 'String' '('INTEGER')'
-    | 'Date'
+    | 'double'
+    | 'String'
     | 'boolean'
     ;
 
