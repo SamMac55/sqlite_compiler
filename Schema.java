@@ -2,13 +2,19 @@ import java.util.ArrayList;
 import java.util.List;
 public class Schema {
     List<Table> tables = new ArrayList<>();
-
+    public static Schema instance;
+    public Schema() {
+        instance = this;
+    }
     public boolean hasTable(String name) {
         for (Table t : tables) {
             if (t.table_name.equals(name))
                 return true;
         }
         return false;
+    }
+    public Schema getSchema() {
+        return instance;
     }
 
     public static class Table{
@@ -24,6 +30,13 @@ public class Schema {
                     return true;
             }
             return false;
+        }
+        public Attribute getAttribute(String name) {
+            for (Attribute a : attributes) {
+                if (a.attr_name.equals(name))
+                    return a;
+            }
+            return null;
         }
         public boolean references(Table other) {
             for (Attribute a : attributes) {

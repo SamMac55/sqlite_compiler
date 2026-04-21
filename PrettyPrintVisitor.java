@@ -3,6 +3,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PrettyPrintVisitor extends liteQLBaseVisitor<String> {
+    public Schema schema;
+    public PrettyPrintVisitor(Schema schema) {
+        this.schema = schema;
+    }
     @Override
     public String visitProgram(liteQLParser.ProgramContext ctx){
         StringBuilder sb = new StringBuilder();

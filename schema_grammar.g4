@@ -3,10 +3,13 @@ import base_lexer;
 //note to self the next step is to create the visitor for this and generate the symbol table + add semantic checking
 //used for parsing the .fullschema command from sqlite so we can use it for semantic processing
 //program: fullschema EOF;
+program: createTable* EOF;
+
+createTable: CREATE TABLE tablename=ID '(' columnList ')' ';';
 
 
-createTable: CREATE TABLE tablename=ID '(' columnDef (',' columnDef)* ')' ';';
 
+columnList: columnDef (',' columnDef)*;
 
 
 columnDef: attributeName=ID dataType? constraint*
@@ -21,7 +24,7 @@ constraint: NOT NULL
         |   PRIMARY KEY
         ;
 
-foreignKey: FOREIGN KEY REFERENCES refTable=ID '(' refColumn=ID ')' ;
+foreignKey: FOREIGN KEY '(' tableattr=ID ')' REFERENCES refTable=ID '(' refColumn=ID ')' ;
 
 CREATE: 'CREATE';
 TABLE: 'TABLE';
