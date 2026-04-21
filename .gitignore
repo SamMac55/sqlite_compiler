@@ -10,3 +10,6 @@ proposed_grammar.g4
 liteQL*.java
 
 *.class
+
+data/script.sql
+data/schema.sql
