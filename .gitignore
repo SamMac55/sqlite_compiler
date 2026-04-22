@@ -6,7 +6,6 @@
 
 *.tokens
 
-proposed_grammar.g4
 liteQL*.java
 schema_grammar*.java
 
